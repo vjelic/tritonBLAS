@@ -1,0 +1,33 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel", "pybind11"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools]
+package-dir = { "" = "include" }
+
+[tool.setuptools.packages.find]
+include = ["tritonblas", "tritonblas.internal"]
+
+[project]
+name = "tritonblas"
+version = "0.1.0"
+description = "A Lightweight Triton-based BLAS Library"
+requires-python = ">=3.8"
+
+dependencies = [
+    "pandas",
+    "pytest",
+    "ruff",
+    "llnl-hatchet",
+]
+
+[tool.ruff]
+line-length = 120
+exclude = ["reference"]
+
+[tool.ruff.lint]
+select = ["E", "F", "W"] 
+ignore = ["E501", "E701", "E731", "E741", "F841", "F401"]
+
+[tool.ruff.format]
+quote-style = "double"
