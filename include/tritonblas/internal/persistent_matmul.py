@@ -52,8 +52,8 @@ def persistent_matmul(
         group_size_m = min(num_pid_m - first_pid_m, GROUP_SIZE_M)
         pid_m = first_pid_m + ((tile_id % num_pid_in_group) % group_size_m)
         pid_n = (tile_id % num_pid_in_group) // group_size_m
-        tl.assume(pid_m > 0)
-        tl.assume(pid_n > 0)
+        tl.assume(pid_m >= 0)
+        tl.assume(pid_n >= 0)
 
         rm = (pid_m * BLOCK_SIZE_M + tl.arange(0, BLOCK_SIZE_M)) % M
         rn = (pid_n * BLOCK_SIZE_N + tl.arange(0, BLOCK_SIZE_N)) % N
