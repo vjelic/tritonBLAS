@@ -106,7 +106,6 @@ def streamk_matmul_lt(
         total_iters_streamk = total_tiles_streamk * iters_per_tile
         total_full_tiles_streamk = total_iters_streamk // total_programs_streamk
         total_partial_tiles_streamk = total_iters_streamk % total_programs_streamk
-
     else:  # all tiles are computed using classical blocking
         total_blocking_tiles = total_tiles
         total_tiles_streamk = 0
@@ -193,7 +192,7 @@ def matmul(a: torch.Tensor, b: torch.Tensor, c: torch.Tensor):
     bitsC = torch.finfo(c.dtype).bits
 
     selector = _make_matmul_selector(M, N, K, bitsA, bitsB, bitsC)
-#    if tritonblas_enable_streamk_matmul:
-#        return streamk_matmul_lt(a, b, c, selector)
-#    else:
-    return streamk_matmul_lt(a, b, c, selector)
+    if tritonblas_enable_streamk_matmul:
+        return streamk_matmul_lt(a, b, c, selector)
+    else:
+    return persistent_matmul_lt(a, b, c, selector)
