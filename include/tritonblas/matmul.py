@@ -7,7 +7,7 @@ from .internal.persistent_matmul import persistent_matmul
 from .internal.streamk_matmul import streamk_matmul
 from .origami import MatmulHeuristicResult
 
-tritonblas_enable_streamk_matmul = False
+tritonblas_enable_streamk_matmul = True
 _tensor_cache = {}
 
 # Function will behave like an LRU-Cache of heuristic results
@@ -94,10 +94,15 @@ def streamk_matmul_lt(
     total_tiles = total_blocks_M * total_blocks_N
     even_k = K % BLK_K == 0
 
-    if total_tiles >= selector.hardware.N_CU:
-        total_programs_streamk = selector.hardware.N_CU
-    else:
-        total_programs_streamk = total_tiles
+    ##
+    # Grid Size
+    ##
+    total_programs_streamk = selector.get_grid()
+    print(f"StreamK Grid : {total_programs_streamk}")
+    # if total_tiles >= selector.hardware.N_CU:
+    #     total_programs_streamk = selector.hardware.N_CU
+    # else:
+    #     total_programs_streamk = total_tiles
 
     if total_programs_streamk > 0:  # Stream-K
         # last wave may occupy less than total_programs_streamk SMs
@@ -191,8 +196,10 @@ def matmul(a: torch.Tensor, b: torch.Tensor, c: torch.Tensor):
     bitsB = torch.finfo(b.dtype).bits
     bitsC = torch.finfo(c.dtype).bits
 
-    selector = _make_matmul_selector(M, N, K, bitsA, bitsB, bitsC)
+    
     if tritonblas_enable_streamk_matmul:
+        selector = _make_matmul_selector(M, N, K, bitsA, bitsB, bitsC,streamk=True)
         return streamk_matmul_lt(a, b, c, selector)
     else:
-    return persistent_matmul_lt(a, b, c, selector)
+        selector = _make_matmul_selector(M, N, K, bitsA, bitsB, bitsC)
+        return persistent_matmul_lt(a, b, c, selector,streamk=False)
