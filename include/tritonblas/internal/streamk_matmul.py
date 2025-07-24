@@ -186,6 +186,8 @@ def streamk_matmul(
             tl.store(P_, acc, cache_modifier=".wt")
             tl.debug_barrier()
             tl.store(locks + pid, 1, cache_modifier=".wt")
+        #  leave atomic_xchg/atomc_cas implementation here for gfx940
+        #  as it doesn't support cache_modifier.
         #   tl.store(P_, acc)
         #   tl.debug_barrier()
         #   tl.atomic_xchg(locks + pid, 1)
