@@ -130,8 +130,11 @@ def bench_matmul(
             m, n, k, A.element_size() * 8, B.element_size() * 8, C.element_size() * 8
         )
         config = selector.get_config()
-        matmul = lambda: tritonblas.matmul_lt(A, B, C, selector)
-        ms = triton.testing.do_bench(matmul, warmup=20, rep=10)
+        # leave below two for debug purpose.
+        # matmul = lambda: tritonblas.streamk_matmul_lt(A, B, C, selector)
+        # matmul = lambda: tritonblas.persistent_matmul_lt(A, B, C, selector)
+        matmul = lambda: tritonblas.matmul(A, B, C)
+        ms = triton.testing.do_bench(matmul, warmup=20, rep=20)
         perf = gflops(ms)
 
         if print_verbose:

@@ -63,7 +63,7 @@ def test_matmul(m, n, k, in_dtype, out_dtype, transA, transB):
                     torch.finfo(B.dtype).bits, # Element Size B in bits
                     torch.finfo(C.dtype).bits # Element Size C in bits
                 )
-    tritonblas.matmul_lt(A, B, C, selector)
+    tritonblas.persistent_matmul_lt(A, B, C, selector)
 
     # Check correctnes: Fix tolerance later
     torch_c = torch.matmul(A, B)
