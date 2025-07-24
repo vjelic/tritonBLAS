@@ -127,13 +127,23 @@ def streamk_matmul_lt(
     if '_tensor_cache' not in globals():
         _tensor_cache = {}
 
-    locks_key = (grids,)
-    P_key = (grids, BLK_M * BLK_N)
+    # Enhanced cache keys to avoid collisions
+    locks_key = (grids, id(torch.cuda.current_stream()))
+    P_key = (grids, BLK_M * BLK_N, id(torch.cuda.current_stream()))
+
     if locks_key not in _tensor_cache:
-        _tensor_cache[locks_key] = torch.zeros((grids,), device="cuda", dtype=torch.int32)
-    locks = _tensor_cache[locks_key]
+        _tensor_cache[locks_key] = torch.zeros((grids,), device="cuda", dtype=torch.uint8)
+    else:
+        # Only zero the active portion
+        _tensor_cache[locks_key][:grids].zero_()
+
     if P_key not in _tensor_cache:
-        _tensor_cache[P_key] = torch.zeros((grids, BLK_M * BLK_N), device="cuda", dtype=c.dtype)
+        _tensor_cache[P_key] = torch.zeros((grids, BLK_M * BLK_N), device="cuda", dtype=torch.float32)
+    else:
+        # Only zero the active portion
+        _tensor_cache[P_key][:grids, :BLK_M * BLK_N].zero_()
+
+    locks = _tensor_cache[locks_key]
     P = _tensor_cache[P_key]
 
     # TODO: Support other matmul algs.
