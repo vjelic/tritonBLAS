@@ -13,9 +13,9 @@ _tensor_cache = {}
 # Function will behave like an LRU-Cache of heuristic results
 # Saves several microseconds for previously seen problems by not rerunning the heuristic unnecessarily
 @functools.lru_cache(maxsize=1024)
-def _make_matmul_selector(M: int, N: int, K: int, bitsA: int, bitsB: int, bitsC: int):
+def _make_matmul_selector(M: int, N: int, K: int, bitsA: int, bitsB: int, bitsC: int,streamk:bool):
     # Run Heuristic Results (Only if key has not been seen before)
-    return MatmulHeuristicResult(M, N, K, bitsA, bitsB, bitsC)
+    return MatmulHeuristicResult(M, N, K, bitsA, bitsB, bitsC,streamk=streamk)
 
 
 def persistent_matmul_lt(
@@ -98,7 +98,6 @@ def streamk_matmul_lt(
     # Grid Size
     ##
     total_programs_streamk = selector.get_grid()
-    print(f"StreamK Grid : {total_programs_streamk}")
     # if total_tiles >= selector.hardware.N_CU:
     #     total_programs_streamk = selector.hardware.N_CU
     # else:
