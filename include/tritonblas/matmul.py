@@ -195,4 +195,4 @@ def matmul(a: torch.Tensor, b: torch.Tensor, c: torch.Tensor):
     if tritonblas_enable_streamk_matmul:
         return streamk_matmul_lt(a, b, c, selector)
     else:
-    return persistent_matmul_lt(a, b, c, selector)
+        return persistent_matmul_lt(a, b, c, selector)
