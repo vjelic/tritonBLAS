@@ -36,30 +36,6 @@
               }
             },
             {
-              "id": "67a89cb4-9b50-3e00-9fe3-4eff86906690",
-              "name": "resources.rules.useless-literal-dict",
-              "shortDescription": {
-                "text": "Opengrep Finding: resources.rules.useless-literal-dict"
-              },
-              "fullDescription": {
-                "text": "key `$X` is uselessly assigned twice"
-              },
-              "defaultConfiguration": {
-                "enabled": true,
-                "level": "warning"
-              },
-              "help": {
-                "text": "key `$X` is uselessly assigned twice\n💎 Enable cross-file analysis and Pro rules for free at sg.run/pro",
-                "markdown": "key `$X` is uselessly assigned twice\n\n#### 💎 Enable cross-file analysis and Pro rules for free at <a href='https://sg.run/pro'>sg.run/pro</a>"
-              },
-              "properties": {
-                "precision": "very-high",
-                "tags": [
-                  "resources.rules.useless-literal-dict"
-                ]
-              }
-            },
-            {
               "id": "de6161c1-410f-3028-bb6d-5bc46dff6a21",
               "name": "resources.rules.missing-pip-no-cache-dir",
               "shortDescription": {
@@ -80,6 +56,30 @@
                 "precision": "very-high",
                 "tags": [
                   "resources.rules.missing-pip-no-cache-dir"
+                ]
+              }
+            },
+            {
+              "id": "67a89cb4-9b50-3e00-9fe3-4eff86906690",
+              "name": "resources.rules.useless-literal-dict",
+              "shortDescription": {
+                "text": "Opengrep Finding: resources.rules.useless-literal-dict"
+              },
+              "fullDescription": {
+                "text": "key `$X` is uselessly assigned twice"
+              },
+              "defaultConfiguration": {
+                "enabled": true,
+                "level": "warning"
+              },
+              "help": {
+                "text": "key `$X` is uselessly assigned twice\n💎 Enable cross-file analysis and Pro rules for free at sg.run/pro",
+                "markdown": "key `$X` is uselessly assigned twice\n\n#### 💎 Enable cross-file analysis and Pro rules for free at <a href='https://sg.run/pro'>sg.run/pro</a>"
+              },
+              "properties": {
+                "precision": "very-high",
+                "tags": [
+                  "resources.rules.useless-literal-dict"
                 ]
               }
             },
@@ -150,37 +150,6 @@
           "properties": {}
         },
         {
-          "ruleId": "67a89cb4-9b50-3e00-9fe3-4eff86906690",
-          "kind": "fail",
-          "level": "warning",
-          "message": {
-            "text": "key `\"transA\"` is uselessly assigned twice"
-          },
-          "locations": [
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "datasets/generate_grid.py",
-                  "uriBaseId": "%SRCROOT%"
-                },
-                "region": {
-                  "startLine": 19,
-                  "startColumn": 21,
-                  "endLine": 29,
-                  "endColumn": 22,
-                  "snippet": {
-                    "text": "                    {\n                        \"in_dtype\": in_dtype,\n                        \"out_dtype\": out_dtype,\n                        \"transA\": transA,\n                        \"transB\": transB,\n                        \"m\": m,\n                        \"n\": n,\n                        \"k\": k,\n                        \"transA\": str(transA),\n                        \"transB\": str(transB),\n                    }"
-                  }
-                }
-              }
-            }
-          ],
-          "fingerprints": {
-            "matchBasedId/v1": "0139d142c82754059bb80e5b8c81b43c79b2cdabd22ed13124b74379078339d4c63ecde640265c4ffd18be84a5593dccbb628ed475f60b3874a345fad7fdd128_0"
-          },
-          "properties": {}
-        },
-        {
           "ruleId": "de6161c1-410f-3028-bb6d-5bc46dff6a21",
           "kind": "fail",
           "level": "warning",
@@ -208,6 +177,37 @@
           ],
           "fingerprints": {
             "matchBasedId/v1": "769d33fbfd40af215788f0eea1628d9dea32570ac484653545b079707d4731297695daa73a8be8f16ce13791e9dbb14a53f4ee5a77962fbecf1a372590efd355_0"
+          },
+          "properties": {}
+        },
+        {
+          "ruleId": "67a89cb4-9b50-3e00-9fe3-4eff86906690",
+          "kind": "fail",
+          "level": "warning",
+          "message": {
+            "text": "key `\"transA\"` is uselessly assigned twice"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "datasets/generate_grid.py",
+                  "uriBaseId": "%SRCROOT%"
+                },
+                "region": {
+                  "startLine": 19,
+                  "startColumn": 21,
+                  "endLine": 29,
+                  "endColumn": 22,
+                  "snippet": {
+                    "text": "                    {\n                        \"in_dtype\": in_dtype,\n                        \"out_dtype\": out_dtype,\n                        \"transA\": transA,\n                        \"transB\": transB,\n                        \"m\": m,\n                        \"n\": n,\n                        \"k\": k,\n                        \"transA\": str(transA),\n                        \"transB\": str(transB),\n                    }"
+                  }
+                }
+              }
+            }
+          ],
+          "fingerprints": {
+            "matchBasedId/v1": "0139d142c82754059bb80e5b8c81b43c79b2cdabd22ed13124b74379078339d4c63ecde640265c4ffd18be84a5593dccbb628ed475f60b3874a345fad7fdd128_0"
           },
           "properties": {}
         },
